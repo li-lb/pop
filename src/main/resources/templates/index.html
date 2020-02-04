@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="../">
+    <meta charset="UTF-8">
+    <script src="js/vue.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/moment.js"></script>
+    <link rel="stylesheet" href="view-design/dist/styles/iview.css">
+    <script src="view-design/dist/iview.min.js"></script>
+    <title>首页</title>
+</head>
+<body>
+<div id="app">
+
+    <div>
+        <i-table :height="tableHeight" stripe border :columns="projectColumns" :data="projectData">
+            <template slot-scope="{row,index}" slot="action">
+                <i-button type="primary" size="small" style="margin-right: 5px" @click="show(row)">确定</i-button>
+            </template>
+        </i-table>
+    </div>
+    <div>
+        <i-input v-model="search.keyword" style="width: 200px;" placeholder="请输入"></i-input>
+        <i-button icon="md-search" @click="searchClick">查询</i-button>
+    </div>
+
+    <div>
+        <i-table :loading="searchLoading" :height="tableHeight" stripe border :columns="searchColumns" :data="searchData">
+        </i-table>
+        <Page style="margin:10px 0;" show-total
+              :current="search.pagination.pageNum"
+              :total="search.pagination.total"
+              :page-size="search.pagination.pageSize"></Page>
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+    let app = {
+        el: '#app',
+        data:function () {
+            return {
+                projectColumns: [
+                    {
+                        title: '项目名称',
+                        key: 'name'
+                    },
+                    {
+                        title: '关键词',
+                        key: 'keywords'
+                    },
+                    {
+                        title: '时间',
+                        key: 'date',
+                        align: 'center',
+                    },
+                    {
+                        title: '操作',
+                        slot: 'action',
+                        align: 'center',
+                    }
+                ],
+                projectData:[
+                    {
+                        name: '张三',
+                        keywords: '人工智能',
+                        date: '2016-10-03'
+                    },
+                    {
+                        name: '李四',
+                        keywords: '大数据',
+                        date: '2016-10-01'
+                    },
+                ],
+                searchColumns: [
+                    {
+                        title: '专家名称',
+                        key: 'name'
+                    },
+                    {
+                        title: '类型',
+                        key: 'type'
+                    },
+                    {
+                        title: '时间',
+                        key: 'createTime',
+                        align: 'center',
+                        render: (h, params) => {
+                            let date = moment(params.row.createTime).format('YYYY-MM-DD HH:mm:ss');
+                            return h('span', date);
+                        }
+                    }
+                ],
+                tableHeight:0,
+                searchData:[],
+                searchLoading: false,
+                search: {
+                    pagination:{
+                        pageNum: 1,
+                        pageSize: 20,
+                        total:0
+                    },
+                    keyword:'',
+                },
+            }
+        },
+        methods: {
+            //页面载入时初始化方法
+            init: function(){
+                this.initTableHeight();
+                this.search.pagination.pageNum = 1;
+                this.getTableList();
+            },
+            //初始化table高度
+            initTableHeight: function(){
+                let height = window.parent.document.getElementById('iframe').clientHeight;
+                this.tableHeight = height - 105;
+            },
+            searchClick(){
+                this.search.pagination.pageNum = 1;
+                this.getTableList();
+            },
+            //分页获取table数据
+            getTableList:function(){
+                let $this = this;
+                $this.searchLoading = true;
+                axios.post('/index/pageList',$this.search)
+                    .then(res=>{
+                        if (res.data.code === 0){
+                            $this.searchData = res.data.data;
+                            $this.search.pagination.total = res.data.total;
+                        }
+                        else {
+                            $this.$Message.error('加载数据失败');
+                        }
+                        $this.searchLoading = false;
+                    })
+            },
+            show (row) {
+                this.search.keyword = row.keywords;
+            },
+        }
+    };
+    new Vue(app);
+</script>
