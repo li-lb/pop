@@ -126,7 +126,7 @@
             getTableList:function(){
                 let $this = this;
                 $this.searchLoading = true;
-                axios.post('/index/pageList',$this.search)
+                axios.post('/expert/pageList',$this.search)
                     .then(res=>{
                         if (res.data.code === 0){
                             $this.searchData = res.data.data;

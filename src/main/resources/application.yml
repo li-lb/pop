@@ -1,6 +1,8 @@
 server:
   port: 8080
 spring:
+  application:
+    name: pop
   thymeleaf:
     cache: false
   mvc:
@@ -30,10 +32,9 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
 
-## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
-mybatis:
-  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
-  type-aliases-package: com.lilb.pop.entity  # 注意：对应实体类的路径
+#mybatis plusxml路径配置
+mybatis-plus:
+  mapper-locations: classpath:mapping/*.xml
 
 #pagehelper分页插件
 pagehelper:
@@ -41,3 +42,9 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+jwt:
+  # 加密密钥
+  secret: iwqjhda8232bjgh432[cicada-smile]
+  # token有效时长
+  expire: 3600

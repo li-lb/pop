@@ -1,4 +1,4 @@
-package com.lilb.pop.entity;
+package com.cnki.entity;
 
 import lombok.Data;
 
