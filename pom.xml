@@ -78,21 +78,13 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.1.2</version>
         </dependency>
-        <!--mybatis plus添加代码生成器依赖 由easyCode插件提供
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.1.2</version>
-        </dependency>
-        -->
-        <!-- java9模块化后缺少的jar包-->
-
         <!--hutool工具类-->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.2.1</version>
         </dependency>
+        <!--poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
