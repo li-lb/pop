@@ -1,5 +1,17 @@
 server:
-  port: 8080
+  undertow:
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+    # 不要设置过大，如果过大，启动项目会报错：打开文件数过多
+    io-threads: 8
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞IO操作, undertow会从这个线程池中取得线程
+    # 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
+    worker-threads: 64
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分，不要设置太大，以免影响其他应用，合适即可
+    buffer-size: 1024
+    # 是否分配的直接内存(NIO直接分配的堆外内存)
+    direct-buffers: true
+
 spring:
   application:
     name: pop
@@ -12,8 +24,8 @@ spring:
     static-locations: classpath:/static/,classpath:/templates/
   datasource:
     name: test
-    url: jdbc:mysql://127.0.0.1:3306/pop?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=true
-    username: root
+    url: jdbc:mysql://39.107.235.107:3306/pop?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: lilb
     password: 123456
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
@@ -34,17 +46,10 @@ spring:
 
 #mybatis plusxml路径配置
 mybatis-plus:
+  # xml地址
   mapper-locations: classpath:mapping/*.xml
-
-#pagehelper分页插件
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-
-jwt:
-  # 加密密钥
-  secret: iwqjhda8232bjgh432[cicada-smile]
-  # token有效时长
-  expire: 3600
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.cnki.entity   #自己的实体类地址
+    #configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+  #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
