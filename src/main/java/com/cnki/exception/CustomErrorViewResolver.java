@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * 主要针对controller层错误处理，错误页面友好提示
+ * @author 76741
  */
 @ControllerAdvice
 public class CustomErrorViewResolver implements ErrorViewResolver {

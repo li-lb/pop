@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 异常信息统一处理，并在错误页面显示
+ * @author 76741
  */
 @Slf4j
 public class CustomException implements HandlerExceptionResolver {

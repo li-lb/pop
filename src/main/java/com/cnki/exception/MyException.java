@@ -2,6 +2,7 @@ package com.cnki.exception;
 
 /**
  * 自定义异常类，主要处理运行时异常
+ * @author 76741
  */
 public class MyException extends RuntimeException {
 

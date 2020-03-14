@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 查询返回json格式依照ui默认属性名称
+ * @author 76741
  */
 @Data
 public class ReType implements Serializable {

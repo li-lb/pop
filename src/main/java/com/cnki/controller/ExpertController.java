@@ -64,14 +64,13 @@ public class ExpertController {
         writer.addHeaderAlias("type", "类型");
         writer.addHeaderAlias("createTime", "时间");
         writer.write(list, true);
-        response.setContentType("application/vnd.ms-excel");
         ServletOutputStream out = null;
-        String name = "测试";
         try {
-        name = new String(name.getBytes("gb2312"), "ISO_8859_1");
-        response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls");
-        out = response.getOutputStream();
-        writer.flush(out, true);
+            response.setContentType("application/vnd.ms-excel");
+            String name = new String("测试".getBytes("gb2312"), "ISO_8859_1");
+            response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls");
+            out = response.getOutputStream();
+            writer.flush(out, true);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
