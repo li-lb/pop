@@ -25,7 +25,7 @@ spring:
     static-locations: classpath:/static/,classpath:/templates/
   datasource:
     name: test
-    url: jdbc:mysql://39.107.235.107:3306/pop?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://localhost:3306/pop?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=true
     username: lilb
     password: 123456
     # 使用druid数据源
