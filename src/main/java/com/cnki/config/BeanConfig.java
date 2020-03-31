@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * @author 76741
  */
 @Configuration
-public class MyBatisPlusConfig {
+public class BeanConfig {
 
     /**
      * 分页插件

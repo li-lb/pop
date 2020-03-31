@@ -43,9 +43,7 @@ public class ExpertController {
         ReType reType = new ReType();
         Page<Expert> page = new Page<>(beanSearch.getPagination().getPageNum(), beanSearch.getPagination().getPageSize());
         QueryWrapper<Expert> wrapper = new QueryWrapper();
-        Expert expert = new Expert();
-        expert.setType(beanSearch.getKeyword());
-        wrapper.setEntity(expert);
+        wrapper.lambda().eq(Expert::getType,beanSearch.getKeyword());
         IPage<Expert> mapIPage = expertService.page(page, wrapper);
         reType.setData(mapIPage.getRecords());
         reType.setTotal(mapIPage.getTotal());
