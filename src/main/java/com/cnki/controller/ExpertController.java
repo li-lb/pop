@@ -54,7 +54,7 @@ public class ExpertController {
     @ResponseBody
     public void export(HttpServletResponse response) {
         List<Expert> list = expertService.list();
-        Map<String, String> map = new LinkedHashMap<>(3);
+        Map<String, String> map = new LinkedHashMap<>();
         map.put("name","姓名");
         map.put("type","类型");
         map.put("createTime","时间");
